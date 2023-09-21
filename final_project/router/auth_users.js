@@ -30,7 +30,7 @@ const authenticatedUser = (username,password)=>{ //returns boolean
 }
 }
 
-//only registered users can login
+/*//only registered users can login
 regd_users.post("/login", (req,res) => {
   //Write your code here
   const username = req.body.username;
@@ -53,29 +53,17 @@ regd_users.post("/login", (req,res) => {
     return res.status(208).json({message: "Invalid Login. Check username and password"});
   }
   return res.status(300).json({message: "Yet to be implemented"});
-});
+}); */
 
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
-  const email = req.params.email;
-  let user = users[email]
-  if (user) { //Check is user exists
-      let review = req.body.review;
-      let author = req.body.author;
-      let title=req.body.title
-      //if DOB the DOB has been changed, update the DOB 
-      if(review) {
-          books["review"] = review
-      }
-      if(author) {
-        books["author"] = author
-      }
-      if(title) {
-          books["title"] = title
-      }
-      books[title]=title;
-      res.send(`Books with the title  ${title} has been updated.`);
+  const isbn = req.params.isbn;
+  if(books[isbn])
+  {    
+    let review = req.body.review;
+    books[isbn]["reviews"] = review;
+    res.send(`Review for the book has been updated.`);
   }
   else{
       res.send("Unable to find the book");
@@ -83,7 +71,20 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
 
   return res.status(300).json({message: "Yet to be implemented"});
 });
-
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    const isbn = req.params.isbn;
+    if(books[isbn])
+    {    
+      delete books[isbn]; 
+        res.send(`Review for the book has been deleted.`);
+    }
+    else{
+        res.send("Unable to find the book");
+    }
+  
+    return res.status(300).json({message: "Yet to be implemented"});
+  });
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
 module.exports.users = users;
+module.exports.authenticatedUser=authenticatedUser;
