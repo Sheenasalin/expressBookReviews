@@ -5,6 +5,12 @@ let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
 
+
+function doesExist(username) {
+    return users.some(user => {
+        return user.username === username; 
+    });
+}
 public_users.post("/register", (req,res) => {
   //Write your code here
   return res.status(300).json({message: "Yet to be implemented"});
@@ -74,4 +80,4 @@ public_users.get('/review/:isbn',function (req, res) {
 });
 
 module.exports.general = public_users;
-
+module.exports.doesExist = doesExist;
