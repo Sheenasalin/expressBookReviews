@@ -1,0 +1,13 @@
+const express = require('express');
+const relayRoutes = express.Router();
+const axios=require('axios');
+
+relayRoutes.get("/", async function(req, res) {
+    
+    // const url ="https://sheenajob-5000.theiadocker-3-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/"
+    const url ="https://google.com/"
+const response=await axios.get(url);
+res.send(response.data);
+
+})
+module.exports.relayRoutes = relayRoutes;
