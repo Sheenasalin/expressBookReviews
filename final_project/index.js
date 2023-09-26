@@ -1,8 +1,11 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const session = require('express-session')
-const customer_routes = require('./router/auth_users.js').authenticated;
-const genl_routes = require('./router/general.js').general;
+const { doesExist, general } = require('./router/general.js');
+const {authenticated,authenticatedUser, users}= require('./router/auth_users.js');
+const app = express();
+const {relayRoutes} = require('./router/relay.js');
+app.use(express.json());
 
 const app = express();
 
@@ -68,7 +71,9 @@ app.post("/login", (req,res) => {
  
 const PORT =5000;
 
-app.use("/customer", customer_routes);
-app.use("/", genl_routes);
+app.use("/customer", Authenticated);
+app.use("/relay", relayRoutes);
+app.use("/", general);
+
 
 app.listen(PORT,()=>console.log("Server is running"));
