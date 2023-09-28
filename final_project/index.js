@@ -3,10 +3,7 @@ const jwt = require('jsonwebtoken');
 const session = require('express-session')
 const { doesExist, general } = require('./router/general.js');
 const {authenticated,authenticatedUser, users}= require('./router/auth_users.js');
-const app = express();
 const {relayRoutes} = require('./router/relay.js');
-app.use(express.json());
-
 const app = express();
 
 app.use(express.json());
@@ -71,7 +68,7 @@ app.post("/login", (req,res) => {
  
 const PORT =5000;
 
-app.use("/customer", Authenticated);
+app.use("/customer", authenticated);
 app.use("/relay", relayRoutes);
 app.use("/", general);
 
